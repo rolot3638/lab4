@@ -1,167 +1,289 @@
 #include <stdio.h>
 #include <math.h>
-void task14() {
-    double p, h;
-    double p0 = 1.29;
-    double z = 1.25e-4;
-    printf("h\tp\n");
-    for (h = 0; h <= 1000; h += 100) {
-        p = p0 * exp(-z * h);
-        printf("%.0f\t%.6f\n", h, p);
-    }
-}
 
-void task21() {
-    double x;
-    for (int i = 1; i <= 11; i++) {
-        x = i / 10.0;
-        printf("sin %.1f = %.6f\n", x, sin(x));
-    }
-}
+void task4() {
+    int count = 0;
 
-void task32() {
-    double x;
-    double p = 1, q = 1;
-    int a = 1, b = 2;
-    printf("Введіть x: ");
-    scanf("%lf", &x);
-
-    for (int i = 0; i < 6; i++) {
-        p *= x - a;
-        q *= x - b;
-        a = 2 * a + 1;
-        b = b * 2;
+    for (int a = 1; a < 100; a++) {
+        if (a % 3 == 1 && a % 4 == 2 &&
+            a % 5 == 3 && a % 6 == 4) {
+            printf("%d\n", a);
+            count++;
+        }
     }
 
-    printf("Результат = %.6f\n", p / q);
+    printf("Кількість = %d\n", count);
 }
 
-void task35() {
+void task40() {
     int n;
-    long long c = 0, p;
+    long long v = 1;
+
     printf("Введіть n: ");
     scanf("%d", &n);
+
+    for (int i = 1; i <= n; i++)
+        v *= 2 * i - 1;
+
+    printf("v = %lld\n", v);
+}
+
+void task41() {
+    int n;
+    long long v = 1;
+
+    printf("Введіть n: ");
+    scanf("%d", &n);
+
+    for (int i = 1; i <= n; i++)
+        v *= 2 * i;
+
+    printf("v = %lld\n", v);
+}
+
+void task102() {
+    int n;
+    double people, area;
+    double sumPeople = 0, sumArea = 0;
+
+    printf("Введіть кількість районів: ");
+    scanf("%d", &n);
+
     for (int i = 1; i <= n; i++) {
-        p = 1;
-        for (int j = i; j <= 2 * i; j++)
-            p *= j;
-        c += p;
+        printf("Район %d: ", i);
+        scanf("%lf%lf", &people, &area);
+
+        sumPeople += people;
+        sumArea += area;
     }
-    printf("C = %lld\n", c);
+
+    if (sumArea != 0)
+        printf("Середня щільність = %.6f\n", sumPeople / sumArea);
+    else
+        printf("Площа не може дорівнювати 0.\n");
 }
 
-void task39() {
-    long long a = 1, b = 1, c;
+void task137() {
+    int a, b, c, sum;
 
-    for (int i = 2; i <= 40; i++) {
-        c = a + b;
-        a = b;
-        b = c;
+    printf("Трицифрові числа:\n");
+
+    for (int n = 100; n <= 999; n++) {
+        a = n / 100;
+        b = n / 10 % 10;
+        c = n % 10;
+
+        sum = a * a * a + b * b * b + c * c * c;
+
+        if (sum == n)
+            printf("%d\n", n);
     }
-    printf("f40 = %lld\n", b);
 }
 
-void task43() {
-    double s = 0, x;
-    for (int i = 10; i <= 20; i++) {
-        x = i / 10.0;
-        s += sin(x);
+void task146() {
+    int n, a, b, found;
+
+    for (n = 52; n <= 100; n += 2) {
+        found = 0;
+
+        for (a = 2; a <= n / 2; a++) {
+            int primeA = 1;
+
+            for (int i = 2; i < a; i++) {
+                if (a % i == 0) {
+                    primeA = 0;
+                    break;
+                }
+            }
+
+            if (primeA) {
+                b = n - a;
+                int primeB = 1;
+
+                for (int i = 2; i < b; i++) {
+                    if (b % i == 0) {
+                        primeB = 0;
+                        break;
+                    }
+                }
+
+                if (primeB) {
+                    printf("%d = %d + %d\n", n, a, b);
+                    found = 1;
+                    break;
+                }
+            }
+        }
+
+        if (!found)
+            printf("%d — не представлено\n", n);
     }
-    printf("v = %.6f\n", s);
 }
 
-void task58() {
-    double x = 2;
-    double p = x;
-    double s = 0;
-    for (int i = 1; i <= 11; i += 2) {
-        s += p / i;
-        p *= x * x;
+void task193() {
+    double m, g, c, a;
+
+    printf("Введіть m, g, c: ");
+    scanf("%lf%lf%lf", &m, &g, &c);
+
+    a = g;
+
+    if (c == 1) {
+        if (m == g)
+            printf("m є членом прогресії.\n");
+        else
+            printf("m не є членом прогресії.\n");
+        return;
     }
-    printf("S = %.6f\n", s);
+
+    if (c > 1) {
+        while (a < m)
+            a *= c;
+    } else if (c > 0) {
+        while (a > m)
+            a *= c;
+    }
+
+    if (a == m)
+        printf("m є членом прогресії.\n");
+    else
+        printf("m не є членом прогресії.\n");
 }
 
-void task82() {
-    int n;
-    double a, s = 0;
-    printf("Введіть n: ");
-    scanf("%d", &n);
-    for (int i = 0; i < n; i++) {
-        scanf("%lf", &a);
-        s += a;
+void task209() {
+    double e, a, sum = 0;
+    double power = 2;
+    double fact = 1;
+    int n = 1;
+
+    printf("Введіть epsilon: ");
+    scanf("%lf", &e);
+
+    if (e <= 0) {
+        printf("Epsilon має бути більшим за 0.\n");
+        return;
     }
-    printf("Сума = %.6f\n", s);
+
+    a = power / fact;
+
+    while (fabs(a) >= e) {
+        sum += a;
+
+        n++;
+        power *= 2;
+        fact *= n - 1;
+
+        a = power / fact;
+    }
+
+    printf("Сума = %.10f\n", sum);
 }
 
-void task91() {
-    int n;
-    double a, s = 0;
-    printf("Введіть n: ");
-    scanf("%d", &n);
-    for (int i = 0; i < n; i++) {
-        scanf("%lf", &a);
-        s += a;
+void task258() {
+    double a = 2, b = 4;
+    double x, y, root, den;
+
+    printf("Значення функції:\n");
+
+    for (int i = 0; i < 8; i++) {
+        if (i == 0) x = -5;
+        if (i == 1) x = -4;
+        if (i == 2) x = -3;
+        if (i == 3) x = -2;
+        if (i == 4) x = 0;
+        if (i == 5) x = 4;
+        if (i == 6) x = 7;
+        if (i == 7) x = 10;
+
+        root = 1 + 2 * cos(x * x) * cos(x * x) * cos(x * x);
+        den = 4 * a * x - b;
+
+        if (root < 0 || den == 0) {
+            printf("x = %.0f — функція не визначена\n", x);
+        } else {
+            y = 3.2 * a * b * x * x
+                - (5 * a * sqrt(root)) / den;
+
+            printf("x = %.0f, y = %.6f\n", x, y);
+        }
     }
-    printf("Середнє арифметичне = %.6f\n", s / n);
 }
 
-void task95() {
-    int n;
-    double a[100];
-    double s1 = 0, s2 = 1, s4 = 0;
-    int sign = 1;
-    printf("Введіть n: ");
-    scanf("%d", &n);
-    for (int i = 0; i < n; i++)
-        scanf("%lf", &a[i]);
-    for (int i = 0; i < n; i++) {
-        s1 += fabs(a[i]);
-        s2 *= fabs(a[i]);
-        s4 += sign * a[i];
-        sign = -sign;
+void task265() {
+    double a = 3, b = 0.2;
+    double x, y, den, t;
+
+    printf("Значення функції:\n");
+
+    for (int i = -10; i <= 10; i++) {
+        x = i / 2.0;
+
+        if (cos(x) == 0) {
+            printf("x = %.1f — функція не визначена\n", x);
+            continue;
+        }
+
+        t = tan(x);
+        den = fabs(0.3 * t * t * t - 2);
+
+        if (den == 0) {
+            printf("x = %.1f — функція не визначена\n", x);
+        } else {
+            y = 2.05 * a * x * x * x
+                - (3 * b * sqrt(5 - 2 * sin(4 * x) *
+                sin(4 * x) * sin(4 * x))) / den;
+
+            printf("x = %.1f, y = %.6f\n", x, y);
+        }
     }
-    printf("a) %.6f\n", s1);
-    printf("b) %.6f\n", s2);
-    printf("c) ");
-    for (int i = 0; i < n - 1; i++)
-        printf("%.6f ", a[i] + a[i + 1]);
-    printf("\nd) %.6f\n", s4);
 }
 
 int main() {
     int t;
+
     printf("Введіть номер завдання: ");
     scanf("%d", &t);
+
     switch (t) {
-        case 14:
-            task14();
+        case 258:
+            task258();
             break;
-        case 21:
-            task21();
+
+        case 265:
+            task265();
             break;
-        case 32:
-            task32();
+
+        case 4:
+            task4();
             break;
-        case 35:
-            task35();
+
+        case 41:
+            task41();
             break;
-        case 39:
-            task39();
+
+        case 102:
+            task102();
             break;
-        case 43:
-            task43();
+
+        case 193:
+            task193();
             break;
-        case 58:
-            task58();
+
+        case 40:
+            task40();
             break;
-        case 82:
-            task82();
+
+        case 209:
+            task209();
             break;
-        case 91:
-            task91();
+
+        case 146:
+            task146();
             break;
-        case 95:
-            task95();
+
+        case 137:
+            task137();
             break;
     }
+
 }
